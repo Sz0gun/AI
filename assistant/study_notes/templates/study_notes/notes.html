@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Short Notes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6f9ff; /* Jasny niebieski, przypominający dentystyczne kolory */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        h1, h2 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+        .btn-primary {
+            background-color: #66ccff; /* Niebieski przypominający dentystyczne kolory */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #3399ff; /* Ciemniejszy odcień niebieskiego */
+        }
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+        .list-group-item h5 {
+            font-family: 'Georgia', serif;
+            color: #3399ff; /* Niebieski */
+        }
+        .list-group-item p {
+            color: #555;
+        }
+        .list-group-item small {
+            color: #888;
+        }
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+        .form-control {
+            border-radius: 20px;
+            border: 2px solid #66ccff; /* Niebieski */
+        }
+        .form-control:focus {
+            border-color: #3399ff; /* Ciemniejszy niebieski */
+            box-shadow: none;
+        }
+        .animated-image {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function toggleAnimation(id) {
+            var img = document.getElementById(id);
+            var animatedSrc = img.getAttribute('data-animated');
+            img.src = animatedSrc;
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mt-5">Short Notes</h1>
+    <div class="text-center">
+        <img id="tooth" class="animated-image" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3lsaXc5NGRzOGJudDdhbGo2NWdpNmI1ZnkyMmh3OHVwYjN1a3E0eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRMNZa0mmBNUaaY/giphy_s.gif" data-animated="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3lsaXc5NGRzOGJudDdhbGo2NWdpNmI1ZnkyMmh3OHVwYjN1a3E0eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRMNZa0mmBNUaaY/giphy.webp" onclick="toggleAnimation('tooth')">
+        <img id="unicorn" class="animated-image" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3lsaXc5NGRzOGJudDdhbGo2NWdpNmI1ZnkyMmh3OHVwYjN1a3E0eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRMNZa0mmBNUaaY/giphy_s.gif" data-animated="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3lsaXc5NGRzOGJudDdhbGo2NWdpNmI1ZnkyMmh3OHVwYjN1a3E0eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRMNZa0mmBNUaaY/giphy.webp" onclick="toggleAnimation('unicorn')">
+    </div>
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Add Note</button>
+        </div>
+    </form>
+    <hr>
+    <div class="mt-3">
+        <h2 class="text-center">All Notes</h2>
+        <ul class="list-group mt-4">
+            {% for note in notes %}
+                <li class="list-group-item">
+                    <h5>{{ note.title }}</h5>
+                    <p>{{ note.content }}</p>
+                    <small>Created at: {{ note.created_at }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+
